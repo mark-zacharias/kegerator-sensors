@@ -27,18 +27,18 @@ void setup() {
     SetupTempProbe();    
 }
 void loop() {
-    sensors.requestTemperatures();
 
     //Get resolution of DS18b20
     // Serial.print("Resolution: ");
     // Serial.print(sensors.getResolution(0));
     // Serial.println();
-    
-    //Read temperature from DS18b20
-    float tempC = sensors.getTempCByIndex(0);
-    Serial.print("Temp: ");
-    Serial.println(tempC);
 
+    //publish temp
+    publishTemp();
+
+    //publish weight
+
+    //loop mqtt client
     mqttLoop();
     
     delay(5000);
@@ -86,9 +86,26 @@ void SetupTempProbe() {
     Serial.println( numberOfDevices );
 }
 
-long lastMsg = 0;
-char msg[50];
-int value = 0;
+long prevTempPublish = 0;
+long intervalTemp = 10000;
+char topicTemp[30] = "home/kegerator/temp";
+void publishTemp() {
+    long now = millis();
+    if(now - prevTempPublish >= intervalTemp) {
+        prevTempPublish = now;
+
+        sensors.requestTemperatures();
+        //Read temperature from DS18b20
+        float tempC = sensors.getTempCByIndex(0);
+        Serial.print("Temp: ");
+        Serial.println(tempC);
+        mqttClient.publish(topicTemp, (double)tempC);
+    }
+}
+
+// long lastMsg = 0;
+// char msg[50];
+// int value = 0;
 
 void mqttLoop() {
     if (!mqttClient.connected()) {
@@ -96,15 +113,15 @@ void mqttLoop() {
     }
     mqttClient.loop();
     
-    long now = millis();
-    if (now - lastMsg > 5000) {
-        lastMsg = now;
-        ++value;
-        snprintf (msg, 75, "hello world #%ld", value);
-        Serial.print("Publish message: ");
-        Serial.println(msg);
-        mqttClient.publish("outTopic", msg);
-    }
+    // long now = millis();
+    // if (now - lastMsg > 5000) {
+    //     lastMsg = now;
+    //     ++value;
+    //     snprintf (msg, 75, "hello world #%ld", value);
+    //     Serial.print("Publish message: ");
+    //     Serial.println(msg);
+    //     mqttClient.publish("outTopic", msg);
+    // }
 }
 void reconnectMQTTClient() {
   // Loop until we're reconnected
