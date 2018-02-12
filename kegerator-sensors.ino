@@ -97,9 +97,14 @@ void publishTemp() {
         sensors.requestTemperatures();
         //Read temperature from DS18b20
         float tempC = sensors.getTempCByIndex(0);
-        Serial.print("Temp: ");
-        Serial.println(tempC);
-        mqttClient.publish(topicTemp, (double)tempC);
+        // Serial.print("Temp: ");
+        // Serial.println(tempC);
+        char msg[10];
+        dtostrf(tempC, 2, 2, msg);
+        // snprintf (msg, 10, "%ld", tempC);
+        // Serial.print("Publishing: ");
+        // Serial.println(msg);
+        mqttClient.publish(topicTemp, msg);
     }
 }
 
