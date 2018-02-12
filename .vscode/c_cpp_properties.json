@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceRoot}",
+                "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\cores\\esp8266",
+                "D:\\Users\\markz\\Documents\\Arduino\\libraries\\OneWire",
+                "D:\\Users\\markz\\Documents\\Arduino\\libraries\\DallasTemperature",
+                "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\libraries\\ESP8266WiFi\\src",
+                "D:\\Users\\markz\\Documents\\Arduino\\libraries\\ESP8266_Microgear"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}",
+                    "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\cores\\esp8266",
+                    "D:\\Users\\markz\\Documents\\Arduino\\libraries\\OneWire",
+                    "D:\\Users\\markz\\Documents\\Arduino\\libraries\\DallasTemperature",
+                    "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\libraries\\ESP8266WiFi\\src",
+                    "D:\\Users\\markz\\Documents\\Arduino\\libraries\\ESP8266_Microgear"
+                ],
+                "limitSymbolsToIncludedHeaders": false,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 3
+}
