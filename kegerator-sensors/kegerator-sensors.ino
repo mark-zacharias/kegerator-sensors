@@ -2,9 +2,10 @@
 #include <DallasTemperature.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include "./config.h"
 
 const char* ssid = "jerkstore2.4"; //WIFI Name, WeMo will only connect to a 2.4GHz network.
-const char* password = "burlives"; //WIFI Password
+const char* password = WIFI_PASSWORD; //WIFI Password
 IPAddress ip(192, 168, 1, 120); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 254); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
