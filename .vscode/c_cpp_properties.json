@@ -3,6 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\**",
                 "${workspaceRoot}",
                 "C:\\Users\\markz\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.3.0\\cores\\esp8266",
                 "D:\\Users\\markz\\Documents\\Arduino\\libraries\\OneWire",
@@ -26,8 +28,11 @@
                 ],
                 "limitSymbolsToIncludedHeaders": false,
                 "databaseFilename": ""
-            }
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "forcedInclude": []
         }
     ],
-    "version": 3
+    "version": 4
 }

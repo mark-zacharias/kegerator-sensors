@@ -10,7 +10,7 @@ IPAddress ip(192, 168, 1, 120); // where xx is the desired IP Address
 IPAddress gateway(192, 168, 1, 254); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
-IPAddress mqtt_server(192, 168, 1, 64);
+IPAddress mqtt_server(192, 168, 1, 70);
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
@@ -42,7 +42,7 @@ void loop() {
     //loop mqtt client
     mqttLoop();
     
-    delay(5000);
+    //delay(5000);
 }
 
 void SetupSerial() {
@@ -85,6 +85,10 @@ void SetupTempProbe() {
     int numberOfDevices = sensors.getDeviceCount();
     Serial.print( "Device count: " );
     Serial.println( numberOfDevices );
+
+    int resolution = sensors.getResolution();
+    Serial.print("Device Resolution: ");
+    Serial.println(resolution);
 }
 
 long prevTempPublish = 0;
@@ -96,15 +100,16 @@ void publishTemp() {
         prevTempPublish = now;
 
         sensors.requestTemperatures();
+        // delay(500);
         //Read temperature from DS18b20
         float tempC = sensors.getTempCByIndex(0);
         // Serial.print("Temp: ");
         // Serial.println(tempC);
         char msg[10];
-        dtostrf(tempC, 2, 2, msg);
+        dtostrf(tempC, 2, 2, msg); 
         // snprintf (msg, 10, "%ld", tempC);
-        // Serial.print("Publishing: ");
-        // Serial.println(msg);
+        Serial.print("Publishing: ");
+        Serial.println(msg);
         mqttClient.publish(topicTemp, msg);
     }
 }
