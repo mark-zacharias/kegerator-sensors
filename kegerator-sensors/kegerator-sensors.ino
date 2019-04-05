@@ -31,12 +31,6 @@ void setup() {
     SetupTempProbe();    
 }
 void loop() {
-
-    //Get resolution of DS18b20
-    // Serial.print("Resolution: ");
-    // Serial.print(sensors.getResolution(0));
-    // Serial.println();
-
     //publish temp
     publishTemp();
 
@@ -112,11 +106,9 @@ void publishTemp() {
         //Read temperature from DS18b20
         float tempC = sensors.getTempCByIndex(0);
         tempC = tempC + tempCalibration;
-        // Serial.print("Temp: ");
-        // Serial.println(tempC);
+        
         char msg[10];
         dtostrf(tempC, 2, 2, msg); 
-        // snprintf (msg, 10, "%ld", tempC);
         Serial.print("Publishing: ");
         Serial.println(msg);
         mqttClient.publish(topicTemp, msg);
@@ -162,25 +154,11 @@ void blinkTwice() {
       digitalWrite(led_gpio, LOW);
 }
 
-// long lastMsg = 0;
-// char msg[50];
-// int value = 0;
-
 void mqttLoop() {
     if (!mqttClient.connected()) {
         reconnectMQTTClient();
     }
     mqttClient.loop();
-    
-    // long now = millis();
-    // if (now - lastMsg > 5000) {
-    //     lastMsg = now;
-    //     ++value;
-    //     snprintf (msg, 75, "hello world #%ld", value);
-    //     Serial.print("Publish message: ");
-    //     Serial.println(msg);
-    //     mqttClient.publish("outTopic", msg);
-    // }
 }
 #define maxTempTopic "home/kegerator/maxtemp"
 #define minTempTopic "home/kegerator/mintemp"
@@ -229,16 +207,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   else if(strcmp(topic, tempCalibrationTopic) == 0) {
     setTempCalibration(payload, length);
   }
-  
-  // Switch on the LED if an 1 was received as first character
-  if ((char)payload[0] == '1') {
-    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
-    // but actually the LED is on; this is because
-    // it is acive low on the ESP-01)
-  } else {
-    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
-  }
-
 }
 void setMaxTemp(byte* payload, int length) {
   payload[length] = '\0';  
