@@ -6,7 +6,7 @@
 
 const char* ssid = "jerkstore2.4"; //WIFI Name, WeMo will only connect to a 2.4GHz network.
 const char* password = WIFI_PASSWORD; //WIFI Password
-IPAddress ip(192, 168, 1, 120); // where xx is the desired IP Address
+IPAddress ip(192, 168, 1, 121); // where xx is the desired IP Address 121 sonoff, 120 wemos testbed
 IPAddress gateway(192, 168, 1, 254); // set gateway to match your network
 IPAddress subnet(255, 255, 255, 0); // set subnet mask to match your network
 
@@ -14,9 +14,9 @@ IPAddress mqtt_server(192, 168, 1, 70);
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
-#define led_gpio BUILTIN_LED
-#define relay_gpio D3
-#define ONE_WIRE_BUS D2
+#define led_gpio 13 //BUILTIN_LED
+#define relay_gpio 12 // D3
+#define ONE_WIRE_BUS 14 //D2
 OneWire oneWire(ONE_WIRE_BUS); // Data wire is plugged into port 1 on the wemos
 DallasTemperature sensors(&oneWire);// Pass our oneWire reference to Dallas Temperature.
 
@@ -117,12 +117,12 @@ void publishTemp() {
     }
 }
 long prevSwitchTime = 0;
-#define intervalSwitchTime 30000
+#define intervalSwitchTime 120000 // 2 minutes
 #define topicSwitch "home/kegerator/power"
 int maxTemp = 16;
 int minTemp = 14;
 void turnOnOffRelay(float tempC) {
-  //only change power if it hasn't changed in x minutes
+  //only change power if it hasn't changed in a while
   long now = millis();
   if(now - prevSwitchTime >= intervalSwitchTime) {
     prevSwitchTime = now;
